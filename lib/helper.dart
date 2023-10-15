@@ -13,8 +13,8 @@ class Helper {
     Perguntas(false,
         'É possível utilizar a carteira de habilitação de carro para dirigir um avião.'),
     Perguntas(true, 'O Brasil possui 26 estados e 1 Distrito Federal.'),
-    Perguntas(
-        true, 'Bitcoin é o nome dado a uma das moedas virtuais mais famosas.'),
+    Perguntas(true,
+        'Bitcoin é o nome dado a uma das moedas virtuais mais famosas do mundo.'),
     Perguntas(true, '1 minuto equivale a 60 segundos.'),
     Perguntas(false, '1 segundo equivale a 200 milissegundos.'),
     Perguntas(true,

@@ -34,16 +34,50 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Icon> marcadordePontos = [];
   void respostaCorreta(bool resp) {
-    if (helper.obterReposta() == resp) {
-      marcadordePontos.add(const Icon(
-        Icons.check,
-        color: Colors.green,
-      ));
+    if (helper.proximaPergunta() == true) {
+      setState(
+        () {
+          if (helper.obterReposta() == resp) {
+            marcadordePontos.add(const Icon(
+              Icons.check,
+              color: Colors.green,
+            ));
+          } else {
+            marcadordePontos.add(const Icon(
+              Icons.close,
+              color: Colors.grey,
+            ));
+          }
+        },
+      );
     } else {
-      marcadordePontos.add(const Icon(
-        Icons.close,
-        color: Colors.grey,
-      ));
+      setState(
+        () {
+          respostaCorreta(resp);
+          Alert(
+            context: context,
+            type: AlertType.info,
+            title: "Quiz Finalizado",
+            desc: "Obrigado por jogar",
+            buttons: [
+              DialogButton(
+                width: 120,
+                onPressed: () {
+                  setState(() {
+                    marcadordePontos.clear();
+                    helper.zerarIndice();
+                    Navigator.pop(context);
+                  });
+                },
+                child: const Text(
+                  "Fechar",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              )
+            ],
+          ).show();
+        },
+      );
     }
   }
 
@@ -61,41 +95,9 @@ class _QuizPageState extends State<QuizPage> {
             ),
           ),
           onPressed: () {
-            if (helper.proximaPergunta() == true) {
-              setState(
-                () {
-                  respostaCorreta(resp);
-                },
-              );
-            } else {
-              setState(
-                () {
-                  respostaCorreta(resp);
-                  Alert(
-                    context: context,
-                    type: AlertType.info,
-                    title: "Quiz Finalizado",
-                    desc: "Obrigado por jogar",
-                    buttons: [
-                      DialogButton(
-                        width: 120,
-                        onPressed: () {
-                          setState(() {
-                            marcadordePontos.clear();
-                            helper.zerarIndice();
-                            Navigator.pop(context);
-                          });
-                        },
-                        child: const Text(
-                          "Fechar",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                      )
-                    ],
-                  ).show();
-                },
-              );
-            }
+            setState(() {
+              respostaCorreta(resp);
+            });
           },
         ),
       ),
